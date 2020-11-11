@@ -158,8 +158,13 @@ accepted as candidate JEPs under the OpenJDK JEP process
             * often obscures business logic
 
 ## project panama
-* foreign-function / data interface
+* https://openjdk.java.net/projects/panama/
+* improving and enriching the connections between the Java virtual machine and well-defined but 
+"foreign" (non-Java) APIs
 * better interop with native code and data
+* example for target improvements
+    * native function calling from JVM
+    * new data layouts in JVM heap
 
 ## project valhalla
 * adapting to modern hardware
