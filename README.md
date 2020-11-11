@@ -167,22 +167,18 @@ accepted as candidate JEPs under the OpenJDK JEP process
     * new data layouts in JVM heap
 
 ## project valhalla
+* https://openjdk.java.net/projects/valhalla/
 * adapting to modern hardware
-* value types & specialized generics
 * every object in java has identity
 * goal: pure data aggregator without identity
     * code like a class, works like int
 * valhalla goals
     * provide denser memory layout (inline/value types)
     * specialized generics (including primitive, value types)
-    * smooth library migration
+    * pure data aggregator without identity
+        * code like a class, works like int
+    * inline classes
     * jvm cleanup
-* inline class
-    * is a class
-    * no identity
-    * immutable
-    * not nullable
-    * no synchronization
 
 ## project metropolis
 * big idea: java-on-java
