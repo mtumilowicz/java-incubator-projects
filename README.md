@@ -72,46 +72,28 @@ accepted as candidate JEPs under the OpenJDK JEP process
         ```
 
 ## project loom
+* https://openjdk.java.net/projects/loom/
 * adapting to rising scale expectations
-* continuations & fibers
-* thread/process = yield control and resume (continuation) + execution scheduling (scheduler)
+    * threads in java
+        * thread scheduling is done by the OS
+        * thread stack is pre-reserved
+        * so far, one implementation: OS threads
+        * OS threads must support all applications in all languages
+            * cannot be specialized for the task, are good overall but not specialized
+        * task-switching requires switch to kernel
+        * ram-heavy - megabyte-scale
+        * scheduling is a compromise for all usages
+            * bad cache locality
+    * many lightweight/virtual threads
+        * small number "carrier" heavyweight/kernel threads managed by scheduler
+    * the use of Thread.currentThread() and ThreadLocal is pervasive
+        * without support, or with changed behaviour - little existing code would run
+        * scope locals expected to supplant most used of ThreadLocal
+        * since Java 5 we've encouraged people not to use the Thread API directly anyway
+            * use Executor and Future, so the baggage and past API mistakes are largely inconspicuous
+* main goal
+    * continuations & fibers
 * continuation is the ability to suspend computation and then resume it
-* fiber = continuation + scheduler
-    * scheduling is done by application not OS
-* code like sync, works like async
-* synchronous
-    * easy to read
-    * fits well with language (control flow, exceptions)
-    * fits well with tooling (debuggers, profilers)
-    * but
-        * costly to create and block
-        * a limited resource
-* asynchronous (reactive)
-    * scalable
-    * but
-        * hard to read
-        * very hard to debug and profile
-        * intrusive, nearly impossible to migrate
-            * often obscures business logic
-* threads in java
-    * thread scheduling is done by the OS
-    * thread stack is pre-reserved
-    * java.lang.Thread
-    * so far, one implementation: OS threads
-    * OS threads must support all applications in all languages
-        * cannot be specialized for the task, are good overall but not specialized
-    * task-switching requires switch to kernel
-    * ram-heavy - megabyte-scale; page granularity, can't uncommit
-    * scheduling is a compromise for all usages
-        * bad cache locality
-* many lightweight/virtual threads
-    * small number "carrier" heavyweight/kernel threads managed by scheduler
-* the use of Thread.currentThread() and ThreadLocal is pervasive
-    * without support, or with changed behaviour - little existing code would run
-* since Java 5 we've encouraged people not to use the Thread API directly anyway
-    * use Executor and Future, so the baggage and past API mistakes are largely inconspicuous
-* scope locals expected to supplant most used of ThreadLocal
-* continuation
     ![alt text](img/continuation_demo.png)
     * wrap a runnable
     * Continuation.run() execute the runnable
@@ -123,7 +105,8 @@ accepted as candidate JEPs under the OpenJDK JEP process
         * no OS context switch
     * no heap reservation
         * only store what is actually needed
-* fiber
+* fiber = continuation + scheduler
+    * scheduling is done by application not OS
     * wrap a runnable
     * scheduler using an ExecutorService
         * a fiber is scheduled on the thread
@@ -137,6 +120,20 @@ accepted as candidate JEPs under the OpenJDK JEP process
         * all blocking calls internally a yield
         * the jdk code calls run() on the continuation when it can be 
         rescheduled
+* code like sync, works like async
+    * synchronous
+        * easy to read
+        * fits well with language (control flow, exceptions)
+        * fits well with tooling (debuggers, profilers)
+        * but
+            * costly to create and block
+            * a limited resource
+    * asynchronous (reactive)
+        * scalable
+        * but
+            * hard to read
+            * very hard to debug and profile
+            * often obscures business logic
 
 ## project panama
 * foreign-function / data interface
