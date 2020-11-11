@@ -11,32 +11,67 @@
     * [[VDT19] Java - Quo Vadis? by Tobias Hartmann](https://www.youtube.com/watch?v=149Q1Xbud2I)
     * [Java keeps throttling up! by José Paumard & Remi Forax](https://www.youtube.com/watch?v=Y-744emVGoo)
 
-# project amber
-* adapting to rising developer expectations
-* right-sizing language ceremony
-* explore and incubate smaller, productivity-oriented java language features
-* diamond operator
-    * List<String> list = new ArrayList<>()
-* static methods type inference
-    * List<String> empty = Collections.emptyList() // not Collections.<String>emptyList()
-* lambda args type inference
-    * Predicate<String> isEmpty = s -> s.length() == 0 // not (String s) -> s.length() == 0
-* local variable type inference
-    * var
-* switch with "case xxxx -> 7"
-* record: record Point(double x, double y)
-    * first-class support for modeling data-only aggregates
-        * the state, the whole state and nothing but the state
-    * close a possible gap in java's type system
-    * language-level syntax for a common pattern
-    * reduce class boilerplate
-    * something like data in kotlin
-* pattern matching
-* sealed type
-    * defines a closed hierarchy
-* smart casts
+## preface
+* the goal of this paper is to show main java incubator projects
+* note that this paper is not updated on a daily manner, so don't hold your breath
+* up-to-date: 11.11.2020
 
-# project loom
+## project amber
+* https://openjdk.java.net/projects/amber/
+* explore and incubate smaller, productivity-oriented Java language features that have been 
+accepted as candidate JEPs under the OpenJDK JEP process
+* adapting to rising developer expectations
+* exemplary shipped features
+    * diamond operator
+        ```
+        List<String> list = new ArrayList<>()
+        ```
+    * static methods type inference
+        ```
+        List<String> empty = Collections.emptyList() // instead of Collections.<String>emptyList()
+        ```
+    * lambda args type inference
+        ```
+        Predicate<String> isEmpty = s -> s.length() == 0 // instead of (String s) -> s.length() == 0
+        ```
+    * local variable type inference
+        ```
+        var i = 1;
+        ```
+    * enhanced switch expressions
+        ```
+        static void howMany(int k) {
+            switch (k) {
+                case 1  -> System.out.println("one");
+                case 2  -> System.out.println("two");
+                default -> System.out.println("many");
+            }
+        }
+        ```
+* incubating
+    * record
+        ```
+        record Point(double x, double y)
+        ```
+        * first-class support for modeling data-only aggregates
+            * the state, the whole state and nothing but the state
+        * close a possible gap in java's type system
+        * language-level syntax for a common pattern
+        * reduce class boilerplate
+        * something like data in kotlin
+    * sealed type
+        * defines a closed hierarchy
+    * pattern matching
+    * smart casts
+        ```
+        if (obj instanceof String s) {
+            // can use s here
+        } else {
+            // can't use s here
+        }
+        ```
+
+## project loom
 * adapting to rising scale expectations
 * continuations & fibers
 * thread/process = yield control and resume (continuation) + execution scheduling (scheduler)
@@ -103,11 +138,11 @@
         * the jdk code calls run() on the continuation when it can be 
         rescheduled
 
-# project panama
+## project panama
 * foreign-function / data interface
 * better interop with native code and data
 
-# project valhalla
+## project valhalla
 * adapting to modern hardware
 * value types & specialized generics
 * every object in java has identity
@@ -125,7 +160,7 @@
     * not nullable
     * no synchronization
 
-# project metropolis
+## project metropolis
 * big idea: java-on-java
     * reduce dependency on c/cpp/assembly and rely on self-optimization
     * reduce complexity and cost of maintenance
@@ -134,7 +169,7 @@
     * graal already part of the openJDK
 * potentially replace other components in the future
 
-# project portola
+## project portola
 * java in a world of containers
 * java's characteristics make it ideal for container deployment
     * safe, performant, reliable, rich ecosystem
