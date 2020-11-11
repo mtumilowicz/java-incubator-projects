@@ -181,16 +181,19 @@ accepted as candidate JEPs under the OpenJDK JEP process
     * jvm cleanup
 
 ## project metropolis
+* https://openjdk.java.net/projects/metropolis/
 * big idea: java-on-java
     * reduce dependency on c/cpp/assembly and rely on self-optimization
     * reduce complexity and cost of maintenance
 * first goal: replace JIT (C2)
-    * currently experimenting with graalvm + substratevm
-    * graal already part of the openJDK
+    * currently experimenting with GraalVm + SubstrateVM
+    * GraalVM already part of the openJDK
 * potentially replace other components in the future
 
 ## project portola
+* https://openjdk.java.net/projects/portola/
 * java in a world of containers
 * java's characteristics make it ideal for container deployment
     * safe, performant, reliable, rich ecosystem
 * having java remain the first choice for deployments in the cloud
+* main goal: provide a port of the JDK to the Alpine Linux distribution
