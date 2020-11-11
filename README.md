@@ -94,21 +94,44 @@ accepted as candidate JEPs under the OpenJDK JEP process
 * main goal
     * continuations & fibers
 * continuation is the ability to suspend computation and then resume it
-    ![alt text](img/continuation_demo.png)
-    * wrap a runnable
-    * Continuation.run() execute the runnable
+    * example
+        ```
+        public class ContinuationExample {
+            public static void main(String[] args) {
+                var scope = new ContinuationScope("example");
+                var continuation = new Continuation(scope, () -> {
+                    System.out.println("hello");
+                    Continuation.yield(scope);
+                    System.out.println("hello again");
+                });
+                System.out.println("start continuation");
+                continuation.run();
+                System.out.println("run it again");
+                continuation.run();
+            }
+        }
+        ```
+        will print
+        ```
+        start continuation
+        hello
+        run it again
+        hello again
+        ```
+    * wraps a runnable
+    * `Continuation.run()` executes the runnable
         * can stop itself with a yield
-        * a call to run() will restart the runnable just after the yield
-    * yield copy the all stack frames on the heap
-        * then run() move some stack frames back
+        * a call to `run()` will restart the runnable just after the `yield`
+    * `yield` copy the all stack frames on the heap
+        * then `run()` move some stack frames back
     * scheduling explicit (yield, run)
         * no OS context switch
     * no heap reservation
         * only store what is actually needed
 * fiber = continuation + scheduler
     * scheduling is done by application not OS
-    * wrap a runnable
-    * scheduler using an ExecutorService
+    * wraps a runnable
+    * scheduler using an `ExecutorService`
         * a fiber is scheduled on the thread
     * blocking calls (read, write, sleep)
         * freeze the fiber, schedule another one
@@ -118,8 +141,7 @@ accepted as candidate JEPs under the OpenJDK JEP process
 * fiber vs continuation
     * fiber delegates the suspension (yield) to the continuation
         * all blocking calls internally a yield
-        * the jdk code calls run() on the continuation when it can be 
-        rescheduled
+        * the jdk code calls `run()` on the continuation when it can be rescheduled
 * code like sync, works like async
     * synchronous
         * easy to read
