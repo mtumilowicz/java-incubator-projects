@@ -10,6 +10,7 @@
     * [Java Futures, 2019 Edition](https://www.youtube.com/watch?v=hryQIIasGY4)
     * [[VDT19] Java - Quo Vadis? by Tobias Hartmann](https://www.youtube.com/watch?v=149Q1Xbud2I)
     * [Java keeps throttling up! by José Paumard & Remi Forax](https://www.youtube.com/watch?v=Y-744emVGoo)
+    * [Panama: A Foreign Policy for Java by Maurizio Cimadamore](https://www.youtube.com/watch?v=cfxBrYud9KM)
 
 ## preface
 * the goal of this paper is to show main java incubator projects
@@ -165,6 +166,7 @@ accepted as candidate JEPs under the OpenJDK JEP process
 * example for target improvements
     * native function calling from JVM
     * new data layouts in JVM heap
+* 
 
 ## project valhalla
 * https://openjdk.java.net/projects/valhalla/
