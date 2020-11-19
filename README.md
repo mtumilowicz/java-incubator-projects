@@ -166,7 +166,8 @@ accepted as candidate JEPs under the OpenJDK JEP process
 * example for target improvements
     * native function calling from JVM
     * new data layouts in JVM heap
-* 
+* "if non-java programmers find some library useful and easy to access
+it should be similarly accessible to java programmers" John Rose, JVM Architect
 
 ## project valhalla
 * https://openjdk.java.net/projects/valhalla/
