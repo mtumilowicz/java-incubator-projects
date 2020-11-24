@@ -11,6 +11,7 @@
     * [[VDT19] Java - Quo Vadis? by Tobias Hartmann](https://www.youtube.com/watch?v=149Q1Xbud2I)
     * [Java keeps throttling up! by José Paumard & Remi Forax](https://www.youtube.com/watch?v=Y-744emVGoo)
     * [Panama: A Foreign Policy for Java by Maurizio Cimadamore](https://www.youtube.com/watch?v=cfxBrYud9KM)
+    * [Project Loom Update with Alan Bateman and Rickard Bäckman](https://www.youtube.com/watch?v=NV46KFV1m-4)
 
 ## preface
 * the goal of this paper is to show main java incubator projects
@@ -125,13 +126,18 @@ accepted as candidate JEPs under the OpenJDK JEP process
         * a call to `run()` will restart the runnable just after the `yield`
     * `yield` copy the all stack frames on the heap
         * then `run()` move some stack frames back
+            * when resuming, only thaw a few frames
+            * install a return barrier if more frames exists
+            * return barrier will thaw a few more frames when hit
     * scheduling explicit (yield, run)
         * no OS context switch
     * no heap reservation
         * only store what is actually needed
 * fiber = continuation + scheduler
     * scheduling is done by application not OS
-    * wraps a runnable
+    * wraps a task in a continuation
+        * continuation yields when the task needs to block
+        * continuation is continued when the task is ready to continue
     * scheduler using an `ExecutorService`
         * a fiber is scheduled on the thread
     * blocking calls (read, write, sleep)
@@ -157,6 +163,20 @@ accepted as candidate JEPs under the OpenJDK JEP process
             * hard to read
             * very hard to debug and profile
             * often obscures business logic
+* structured concurrency
+    * core idea: "every time that control splits into multiple concurrent paths, we
+    want to make sure that they join up again"
+    * implementation detail: FiberScope
+        ```
+        FiberScope scope = FiberScope.open();
+      
+        try {
+            Fiber<String> fiber1 = scope.schedule(task1);
+            Fiber<String> fiber2 = scope.schedule(task2);
+        } finally {
+            scope.close(); // blocks until fiber1 and fiber2 terminate
+        }
+        ```
 
 ## project panama
 * https://openjdk.java.net/projects/panama/
