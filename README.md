@@ -12,6 +12,7 @@
     * [Java keeps throttling up! by José Paumard & Remi Forax](https://www.youtube.com/watch?v=Y-744emVGoo)
     * [Panama: A Foreign Policy for Java by Maurizio Cimadamore](https://www.youtube.com/watch?v=cfxBrYud9KM)
     * [Project Loom Update with Alan Bateman and Rickard Bäckman](https://www.youtube.com/watch?v=NV46KFV1m-4)
+    * [Evolving the JVM with Brian Goetz and John Rose](https://www.youtube.com/watch?v=VziRKd8lLug)
 
 ## preface
 * the goal of this paper is to show main java incubator projects
@@ -199,9 +200,13 @@ it should be similarly accessible to java programmers" John Rose, JVM Architect
     * provide denser memory layout (inline/value types)
     * specialized generics (including primitive, value types)
     * pure data aggregator without identity
-        * code like a class, works like int
     * inline classes
     * jvm cleanup
+* why value types?
+    * smaller footprint (no object header)
+    * better locality (no dereference)
+    * simpler semantics (no identity)
+    * lowe operational impact (no allocation and GC)
 
 ## project metropolis
 * https://openjdk.java.net/projects/metropolis/
